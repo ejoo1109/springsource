@@ -1,0 +1,21 @@
+2021-01-05 16:09:28,596 ERROR c.c.l.LogTest [main] error 레벨
+2021-01-05 16:09:28,603 WARN c.c.l.LogTest [main] warn 레벨
+2021-01-05 16:09:28,604 INFO c.c.l.LogTest [main] info 레벨
+2021-01-05 16:09:28,604 DEBUG c.c.l.LogTest [main] debug 레벨
+2021-01-05 16:09:28,604 TRACE c.c.l.LogTest [main] trace 레벨
+2021-01-05 16:09:48,557 ERROR c.c.l.LogTest [main] error 레벨
+2021-01-05 16:09:48,565 WARN c.c.l.LogTest [main] warn 레벨
+2021-01-05 16:09:48,566 INFO c.c.l.LogTest [main] info 레벨
+2021-01-05 16:09:48,566 DEBUG c.c.l.LogTest [main] debug 레벨
+2021-01-05 16:09:48,566 TRACE c.c.l.LogTest [main] trace 레벨
+2021-01-05 16:11:33,263 ERROR c.c.l.LogTest [main] error 레벨
+2021-01-05 16:11:33,275 WARN c.c.l.LogTest [main] warn 레벨
+2021-01-05 16:11:33,275 INFO c.c.l.LogTest [main] info 레벨
+2021-01-05 16:11:33,276 DEBUG c.c.l.LogTest [main] debug 레벨
+2021-01-05 16:11:33,276 TRACE c.c.l.LogTest [main] trace 레벨
+2021-01-05 16:45:50,369 ERROR c.c.l.LogTest [main] 
+2021-01-05 16:45:50,378 ERROR c.c.l.LogTest [main] error 레벨
+2021-01-05 16:45:50,378 WARN c.c.l.LogTest [main] warn 레벨
+2021-01-05 16:45:50,378 INFO c.c.l.LogTest [main] info 레벨
+2021-01-05 16:45:50,378 DEBUG c.c.l.LogTest [main] debug 레벨
+2021-01-05 16:45:50,378 TRACE c.c.l.LogTest [main] trace 레벨

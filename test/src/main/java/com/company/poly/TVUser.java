@@ -6,7 +6,7 @@ public class TVUser {
 		//다형성
 		
 		//TV lg = new SamsungTV();
-		TV lg = new LgTV();
+		LgTV lg = new LgTV();
 		lg.setSpeaker(new AppleSpeaker());
 		lg.turnOn();
 		lg.soundUp();

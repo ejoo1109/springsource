@@ -4,3 +4,5 @@ create table person(
 );
 
 insert into person values('hong123','홍길동');
+
+select *from person;
