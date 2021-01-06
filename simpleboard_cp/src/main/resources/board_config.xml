@@ -8,15 +8,18 @@
 	<context:component-scan base-package="com.company.persistence"/>
 	<context:component-scan base-package="com.company.service"/>
 
-	<!--Hikari Connection Pool -->
+	<!-- Hikari 커넥션 풀 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-		<property name="username" value="javaDB"/>
-		<property name="password" value="12345"/>
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="javaDB" />
+		<property name="password" value="12345" />
 	</bean>
-	<!-- Connection Pool을 위한 DataSource설정 -->
+	
+	<!-- 커넥션 풀을 위한 DataSource 설정 -->
 	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig"/>
+		<constructor-arg ref="hikariConfig" />
 	</bean>
+	
+	
 </beans>

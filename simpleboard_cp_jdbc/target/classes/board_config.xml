@@ -3,25 +3,30 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
-
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
 	<context:component-scan base-package="com.company.persistence"/>
 	<context:component-scan base-package="com.company.service"/>
-
-	<!--Hikari Connection Pool -->
+	
+	<!-- Hikari 커넥션 풀 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-		<property name="username" value="javaDB"/>
-		<property name="password" value="12345"/>
-	</bean>
-	<!-- Connection Pool을 위한 DataSource설정 -->
-	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig"/>
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="javaDB" />
+		<property name="password" value="12345" />
 	</bean>
 	
-	<!--  jdbc template 등록 -->
-	<bean id="jdbcTemplagte" class="org.springframework.jdbc.core.JdbcTemplate">
-		<constructor-arg ref="ds"/>
+	<!-- 커넥션 풀을 위한 DataSource 설정 -->
+	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
 	</bean>
+	
+	<!-- JDBC 템플릿 등록 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="ds" />
+		
+	
+	</bean>
+	
+	
 </beans>

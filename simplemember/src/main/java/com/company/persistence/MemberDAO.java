@@ -86,6 +86,7 @@ public class MemberDAO {
 	public MemberVO getRow(MemberVO member) {
 		MemberVO vo=null;
 		try {
+			con=getConnection();
 			String sql = "select * from memberTBL where userid=? and password=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1,member.getUserid());
@@ -93,7 +94,7 @@ public class MemberDAO {
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				member=new MemberVO(rs.getString(1),
+				vo=new MemberVO(rs.getString(1),
 						rs.getString(2),rs.getString(3),
 						rs.getString(4),rs.getString(5));
 			}

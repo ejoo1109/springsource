@@ -119,7 +119,7 @@ public class BoardDAO {
 		return vo;
 	}
 	public List<BoardVO> getList() {
-		List<BoardVO> list=new ArrayList();
+		List<BoardVO> list=new ArrayList<>();
 		
 		try {
 			con=getConnection();

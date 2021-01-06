@@ -16,6 +16,7 @@ public class LogTest {
 //		logger.debug("debug 레벨");
 //		logger.trace("trace 레벨");
 
+		//lombok 사용
 		log.error("error 레벨"); 
 		log.warn("warn 레벨");
 		log.info("info 레벨");

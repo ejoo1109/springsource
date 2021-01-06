@@ -30,9 +30,11 @@ public class BoardClient {
 		for(BoardVO vo1:list) {
 			System.out.println(vo1.toString());
 		}
+		
 		//게시글 하나 가져오기
 		BoardVO row = service.getRow(10);
 			System.out.println(row.toString());
+			
 		//게시글 하나 삭제하기
 		BoardVO deleteRow=new BoardVO();
 		deleteRow.setBno(2);
@@ -40,6 +42,7 @@ public class BoardClient {
 		if(delete>0) {
 			System.out.println("삭제 성공");
 		}
+		
 		//게시글 수정하기
 		BoardVO updateRow= new BoardVO();
 		updateRow.setBno(3);

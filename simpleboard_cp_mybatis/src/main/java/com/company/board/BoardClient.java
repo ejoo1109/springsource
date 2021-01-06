@@ -36,20 +36,24 @@ public class BoardClient {
 		}
 		//게시글 하나 가져오기
 //		BoardVO row = service.getRow(10);
-//			System.out.println(row.toString());
+//		System.out.println(row.toString());
+		
 		//게시글 하나 삭제하기
 //		BoardVO deleteRow=new BoardVO();
 //		deleteRow.setBno(2);
 //		int delete = service.deleteBoard(deleteRow);
+		
 //		if(delete>0) {
 //			System.out.println("삭제 성공");
 //		}
+		
 		//게시글 수정하기
 //		BoardVO updateRow= new BoardVO();
 //		updateRow.setBno(3);
 //		updateRow.setTitle("스프링 주요 개념2");
 //		updateRow.setContent("스프링 주요 개념2 - DI");
 //		int update = service.updateBoard(updateRow);
+		
 //		if(update>0) {
 //			System.out.println("수정 성공");
 //		}

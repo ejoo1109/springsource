@@ -1,7 +1,7 @@
 package com.company.poly;
 
 public class LgTV implements TV {
-	
+	//멤버변수로 선언
 	private Speaker speaker;
 	
 	//방법1.객체생성하는것으로 생성자를 만듬
