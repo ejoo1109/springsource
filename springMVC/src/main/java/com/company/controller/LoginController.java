@@ -28,15 +28,15 @@ public class LoginController {
 	//@RequestMapping(value="/login",method=RequestMethod.POST) // http://localhost:8080/login
 //	@PostMapping("/login")
 //	public void loginPost(HttpServletRequest request) { 
-//  	// 방법1.기존 방법대로 사용자가 입력한 값 가져오기 request.getParameter
-//		log.info("login post..."); //login -> view 리졸버
+//  	// 방법1.기존 방법대로 사용자가 입력한 값 가져오기 request.getParameter 
+//		log.info("login post..."); //login -> view 리졸버 .단점: 코딩이 길어지고 잘 사용하지 않음
 //		log.info("userid" +request.getParameter("userid"));
 //		log.info("password" +request.getParameter("password"));
 //	}
 	
 	@PostMapping("/login")
 	public String loginPost(@RequestParam("userid")String userid, String password,Model model) { 
-	    //방법2. 파라메터처리(단, name값 맞추기)
+	    //방법2. 파라메터처리(단, name값 맞추기) 단점: 데이터가 많을경우 불편함
 		log.info("login post..."); //login -> view 리졸버
 		log.info("userid" +userid);
 		log.info("password" +password);
