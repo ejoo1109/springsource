@@ -16,12 +16,12 @@ pageEncoding="UTF-8"%>
         margin-top: 100px;
       }
     </style>
-  </head>
+     </head>
   <body>
     <div class="card border-success mb-3 mx-auto" style="max-width: 25rem;">
       <div class="card-header">비밀번호 변경</div>
       <div class="card-body">
-        <form id="changePwd">
+        <form id="changePwd" method="post">
           <div class="form-group row">
             <input
               type="password"
@@ -63,5 +63,16 @@ pageEncoding="UTF-8"%>
         </form>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="/resources/js/modify.js"></script>
+    <script>
+    $(function(){
+    	var error ='${error}';
+    	if(error!=''){
+    		alert(error);
+    	}
+    })
+    </script>
   </body>
 </html>

@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.HttpSessionMutexListener;
 
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
 import com.company.domain.RegisterVO;
+import com.company.domain.changeVO;
 import com.company.service.RegisterService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -120,9 +122,39 @@ public class RegisterController {
 		
 		//회원탈퇴 - 회원삭제하고 성공하면 세션해제후 index이동
 		@PostMapping("/leave")
-		public String leavePost() {
-			//auth:userid,name
-			return "redirect:/";
+		public String leavePost(LoginVO login, HttpSession session) {
+			log.info("회원탈퇴 요청"+login);
+			
+			if(service.leave(login)) { //비밀번호가 맞은경우
+				//auth : userid, name
+				session.invalidate();
+				return "redirect:/";
+			}else { //비밀번호가 틀린경우
+				return "redirect:leave";
+			}
+		}
+		//비밀번호 수정 폼 보여주기
+		@GetMapping("/changePwd")
+		public void changeInfo() {
+			log.info("비빈번호 변경 폼 보여주기");
+		}
+		@PostMapping("/changePwd")
+		public String changePost(changeVO change,@SessionAttribute AuthVO auth,HttpSession session,RedirectAttributes rttr) {
+			//회원정보 수정 - change(password, new_password, confirm_password)
+			log.info("회원정보 수정"+change);
+			//userid 세션에서 가져와서 change에 담기
+			//AuthVO auth=(AuthVO) session.getAttribute("auth"); 대신 @SessionAttribute 대체할 수 있다.
+			change.setUserid(auth.getUserid());
+			
+			//service에 비밀번호 변경 요청
+			if(service.update(change)) {//성공 => 세션해제 후 로그인 페이지로 이동
+				session.invalidate();
+				return "redirect:signin";
+			}else {//실패 => 비밀번호 변경 폼 보여주기
+				rttr.addFlashAttribute("error","비밀번호를 확인해 주세요");				
+			} return "redirect:changePwd";
+			
 			
 		}
+		
 }

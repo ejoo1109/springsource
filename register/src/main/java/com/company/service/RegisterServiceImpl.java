@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
 import com.company.domain.RegisterVO;
+import com.company.domain.changeVO;
 import com.company.mapper.RegisterMapper;
 
 @Service
@@ -32,6 +33,11 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public boolean leave(LoginVO login) {
 		return mapper.leaveMember(login)>0?true:false;
+	}
+
+	@Override
+	public boolean update(changeVO change) {
+		return mapper.updateMember(change)>0?true:false;
 	}
 
 }
