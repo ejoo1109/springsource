@@ -14,7 +14,11 @@
 	
 <!-- 로그인 AuthVO isLogin(LoginVO login) AuthVO:넘어갈 데이터/ LoginVO: 넘어온데이터-->
 	<select id="selectByMember" resultType="com.company.domain.AuthVO">
-	select userid, name from memberTBL 
-	where userid=#{userid} and password=#{password}
+	select userid, name from memberTBL where userid=#{userid} and password=#{password}
 	</select>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="leaveMember">
+	delete from memberTBL where userid=#{userid} and password=#{password}
+	</delete>
 </mapper>

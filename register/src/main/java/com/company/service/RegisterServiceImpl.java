@@ -29,4 +29,9 @@ public class RegisterServiceImpl implements RegisterService {
 		return mapper.selectByMember(login);
 	}
 
+	@Override
+	public boolean leave(LoginVO login) {
+		return mapper.leaveMember(login)>0?true:false;
+	}
+
 }

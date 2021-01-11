@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.HttpSessionMutexListener;
 
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
@@ -91,12 +92,37 @@ public class RegisterController {
 		
 		//로그인 정보(아이디, 비밀번호)를 가져오는 컨트롤러
 		@PostMapping("/signin")
-		public void loginPost(LoginVO login) {
+		public String loginPost(LoginVO login, HttpSession session) {
 			log.info("로그인 페이지 요청..."+login);
-			
 			AuthVO auth=service.isLogin(login);
-			log.info("auth"+auth);
-			
+			if(auth!=null) {
+				session.setAttribute("auth", auth);
+				return "redirect:/";
+			}else { //userid,password가 틀려서 로그인을 못한경우
+				return "redirect:signin";
+			}
 		}
 		
+		//로그아웃-세션해제 후 index 이동
+		@GetMapping("/logout")
+		public String logout(HttpSession session) {
+			log.info("로그아웃요청...");
+			session.invalidate(); //세션에 있는 정보 모두 삭제
+//			session.removeAttribute("auth"); //특정 세션만 삭제
+			return "redirect:/"; //home 컨트롤러로 돌아가서 결국 최종 리턴은 인덱스
+		}
+		
+		//회원탈퇴 폼 보여주기
+		@GetMapping("/leave")
+		public void leaveGet() {
+			log.info("회원탈퇴 폼 보여주기");
+		}
+		
+		//회원탈퇴 - 회원삭제하고 성공하면 세션해제후 index이동
+		@PostMapping("/leave")
+		public String leavePost() {
+			//auth:userid,name
+			return "redirect:/";
+			
+		}
 }

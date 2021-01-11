@@ -16,7 +16,7 @@
 	<!-- Hikari 커넥션 풀 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1522:orcl" />
 		<property name="username" value="javaDB" />
 		<property name="password" value="12345" />
 	</bean>

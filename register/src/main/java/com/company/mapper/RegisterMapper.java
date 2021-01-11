@@ -9,4 +9,5 @@ public interface RegisterMapper {
 	public RegisterVO selectById(String userid);
 	public int insert(RegisterVO regist);
 	public AuthVO selectByMember(LoginVO login);
+	public int leaveMember(LoginVO login);
 }

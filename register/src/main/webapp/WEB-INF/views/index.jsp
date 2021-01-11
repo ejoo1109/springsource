@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +13,15 @@
 	<div class="container">
 	  <h1 class="display-4">Spring WebMVC</h1>	 
 	  <hr class="my-4">  
+	  <c:if test="${empty auth}">
 	  <a class="btn btn-primary btn-lg" href="/member/step1" role="button">회원가입</a>
 	  <a class="btn btn-success btn-lg" href="/member/signin" role="button">로그인</a>
+	  </c:if>
+	  <c:if test="${!empty auth}">
+	  <a class="btn btn-primary btn-lg" href="/member/logout" role="button">로그아웃</a>
+	  <a class="btn btn-success btn-lg" href="/member/changePwd" role="button">비밀번호 변경</a>
+	  <a class="btn btn-danger btn-lg" href="/member/leave" role="button">회원탈퇴</a>
+	  </c:if>
 	</div>
 </div>
 </body>

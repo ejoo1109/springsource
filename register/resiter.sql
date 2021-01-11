@@ -1,2 +1,5 @@
 select * from memberTBL;
-select userid, name from MEMBERTBL where userid='hong1234!' and password='hong1234!';
+
+
+select userid, name from memberTBL
+where userid='hong123' and password='hong123';
