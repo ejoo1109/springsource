@@ -20,25 +20,37 @@
                 			<form action="" role="form">
                 				<div class="form-group">
                 					<label>Bno</label>
-                					<input class="form-control" name="bno" readonly="readonly">                				
+                					<input class="form-control" name="bno" value="${board.bno}" readonly="readonly">                				
                 				</div> 
                 				<div class="form-group">
                 					<label>Title</label>
-                					<input class="form-control" name="title" readonly="readonly">                				
+                					<input class="form-control" name="title" value="${board.title}" readonly="readonly">                				
                 				</div>  
                 				<div class="form-group">
                 					<label>Content</label>
-                					<textarea class="form-control" rows="3" name="content" readonly="readonly"></textarea>               				
+                					<textarea class="form-control" rows="3" name="content" readonly="readonly">${board.content}</textarea>               				
                 				</div> 
                 				<div class="form-group">
                 					<label>Writer</label>
-                					<input class="form-control" name="writer" readonly="readonly">                				
+                					<input class="form-control" name="writer" value="${board.writer}" readonly="readonly">                				
                 				</div>  
                 				<button type="button" class="btn btn-default">Modify</button>     			
-                				<button type="reset" class="btn btn-info">List</button>          			
+                				<button type="reset" class="btn btn-info" onclick="location.href='list'">List</button>          			
                 			</form>
                 		</div>
                 	</div>
                 </div>
-            </div>           
+            </div>
+<%-- 페이지 나누기를 위해 필요한 값 세팅 --%>     
+<form action="modify" id="myform">
+	<input type="hidden" name="bno" value="${board.bno}"/>
+</form>
+<script>
+ $(function(){
+	var form = $("#myform");
+	$(".btn-default").click(function(){
+		form.submit();
+	})
+ })
+</script>      
 <%@include file="../includes/footer.jsp" %>       

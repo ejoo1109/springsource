@@ -14,4 +14,6 @@ create sequence seq_board;
 select*from spring_board;
 
 insert into spring_board(bno,title,content,writer) 
-values(seq_board.nextval,'테스트','테스트','테스트');
+values(seq_board.nextval,'자바','자바','자바');
+
+

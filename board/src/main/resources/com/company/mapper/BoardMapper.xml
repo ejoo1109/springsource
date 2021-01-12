@@ -19,13 +19,13 @@
 	</delete>
 	
 <!-- 게시글 개별 조회 -->
-	<select id="select" resultType="com.company.domain.BoardVO">
+	<select id="read" resultType="com.company.domain.BoardVO">
 	select * from spring_board where bno=#{bno}
 	</select>
 	
 <!-- 게시글 전체조회 -->
-	<select id="selectAll" resultType="com.company.domain.BoardVO">
-	select * from spring_board
+	<select id="list" resultType="com.company.domain.BoardVO">
+	select * from spring_board where bno>0 order by bno desc
 	</select>
 
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.company.domain.BoardVO;
 
-//DAO 작업 : 결과는 result>0 형태로 나오기 때문에 리턴타입이 boolean으로 작성
+//DAO 작업 : 결과는 true or false(commit or rollback) 형태로 나오기 때문에 리턴타입이 boolean으로 작성
 public interface BoardService {
 	//게시글 등록
 	public boolean regist(BoardVO board);

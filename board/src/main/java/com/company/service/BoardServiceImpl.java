@@ -31,12 +31,12 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO getRow(int bno) {
-		return mapper.select(bno);
+		return mapper.read(bno);
 	}
 
 	@Override
 	public List<BoardVO> getList() {
-		return mapper.selectAll();
+		return mapper.list();
 	}
 
 

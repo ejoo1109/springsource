@@ -31,7 +31,7 @@
                 					<input class="form-control" name="writer">                				
                 				</div>  
                 				<button type="submit" class="btn btn-default">Submit</button>              			
-                				<button type="reset" class="btn btn-default">reset</button>              			
+                				<button type="reset" class="btn btn-default" onclick="location.href='list'">List</button>              			
                 			</form>
                 		</div>
                 	</div>
