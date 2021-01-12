@@ -27,9 +27,14 @@ pageEncoding="UTF-8"%>
     <title>도서 관리 시스템</title>
     <script>
       $(function () {
-        //페이지 로드시 첫 메뉴에 해당하는 것 보여주기
-        $("#myList a[href='#insert']").tab("show");
+        //페이지 로드시 tab에 해당하는 것 보여주기
+        var tab='${tab}'; //'insert'
+        if(tab==''){
+        	tab='insert';
+        }
+        $("#myList a[href='#"+tab+"']").tab("show");
       });
+
     </script>
   </head>
   <body>

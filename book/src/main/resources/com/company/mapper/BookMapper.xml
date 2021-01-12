@@ -18,17 +18,18 @@
 	
 	<!-- 전체 도서정보 조회 -->
 	<select id="selectAll" resultType="com.company.domain.BookVO">
-	select * from bookTBL order by code
+	select * from bookTBL
 	</select>
 	
 	<!-- 개별 도서정보 조회 : code or writer-->
 	<select id="search" resultType="com.company.domain.BookVO">
 	select * from bookTBL where 
-		<if test="criteria=='code'.toString()">
-			code=#{keyword} order by code
+	${criteria} = #{keyword}
+<!-- 		<if test="criteria=='code'.toString()">
+			code=#{keyword}
 		</if>
 		<if test="criteria=='writer'.toString()">
-			writer like '%'||#{keyword}||'%' order by code
-		</if>		
+			writer like '%'||#{keyword}||'%'
+		</if>		 -->
 	</select>
 </mapper>

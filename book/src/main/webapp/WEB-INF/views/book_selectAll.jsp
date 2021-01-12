@@ -82,7 +82,7 @@ pageEncoding="UTF-8"%>
         <div class="col-xl-9">
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade" id="delete" role="tabpanel">
-              <jsp:include page="view/book_delete.jsp" />
+              <jsp:include page="book/book_delete.jsp" />
             </div>
             <div class="tab-pane fade" id="all" role="tabpanel">
               <table class="table table-bordered">
