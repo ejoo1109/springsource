@@ -46,31 +46,9 @@
 <%-- 페이지 나누기를 위해 필요한 값 세팅 --%>     
 <form action="" id="myform" method="post">
 	<input type="hidden" name="bno" value="${board.bno}"/>
+	<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
+	<input type="hidden" name="amount" value="${cri.amount}"/>
 </form>
 <%-- 스크립트 --%>
-<script>
- $(function(){
-	var form = $("#myform");
-	
-	$("button").click(function(e){
-		e.preventDefault(); //버튼을 누르면 submit기능 막기
-		
-		var oper= $(this).data("oper");
-		console.log(oper);
-		
-		if(oper == 'remove'){
-			 form.attr("action","remove");
-		}else if(oper == 'modify'){
-			//원래의 수정 폼 보내기
-			form = $("form[role='form']");
-		}else if(oper == 'list'){
-			 form.attr("action","list")
-			 	 .attr("method","get"); //메소드 속성을 getd으로 바꿔서 submit요청
-			 	 //폼 안의 bno 제거하기
-			 form.find("input[name='bno']").remove();
-		}
-		form.submit();
-	})
- })
-</script>
+<script scr="/resources/js/modify.js"></script>
 <%@include file="../includes/footer.jsp" %>       
