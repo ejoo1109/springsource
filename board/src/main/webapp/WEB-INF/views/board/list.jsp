@@ -69,6 +69,24 @@
                 </div>               
             <!-- /.row -->
 <!-- 모달 추가 -->
-
+<div class="modal" tabindex="-1" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">게시글 등록</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>처리가 완료 되었습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- 스크립트 -->
+<script src="/resources/js/list.js"></script>
 <%@include file="../includes/footer.jsp" %>       

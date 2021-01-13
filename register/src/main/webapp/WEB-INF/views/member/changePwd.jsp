@@ -11,6 +11,19 @@ pageEncoding="UTF-8"%>
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="/resources/js/modify.js"></script>
+    
+    <script>
+    $(function(){
+    	var error ='${error}';
+    	if(error!=''){
+    		alert(error);
+    	}
+    })
+    </script>
     <style>
       body {
         margin-top: 100px;
@@ -63,16 +76,6 @@ pageEncoding="UTF-8"%>
         </form>
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
-    <script src="/resources/js/modify.js"></script>
-    <script>
-    $(function(){
-    	var error ='${error}';
-    	if(error!=''){
-    		alert(error);
-    	}
-    })
-    </script>
+
   </body>
 </html>

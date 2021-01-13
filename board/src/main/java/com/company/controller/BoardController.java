@@ -31,11 +31,13 @@ public class BoardController {
 	
 	//게시글 작성
 	@PostMapping("/register")
-	public String registerPost(BoardVO board) {
+	public String registerPost(BoardVO board,RedirectAttributes rttr) {
 		//if(service.regist()) {
 		log.info("게시글 등록"+board);
-		
 		service.regist(board); 
+		log.info("게시글 번호 "+board.getBno());
+		//등록성공시 메시지를 모달로 띄우기 위해 조금 전 등록된 글 번호 보내기
+		rttr.addFlashAttribute("result", board.getBno()); 
 			return "redirect:list";
 	}
 	//전체 리스트 보여주기

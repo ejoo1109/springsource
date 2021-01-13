@@ -9,12 +9,12 @@ $(function(){
     rules :{
         password:{
 			required:true,
-            validPwd : true,
+            validPwd : true
 
         },
         new_password:{
 			required:true,
-            validPwd : true,
+            validPwd : true
 
         },
          confirm_password:{

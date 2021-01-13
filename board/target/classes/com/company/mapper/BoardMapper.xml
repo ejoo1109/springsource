@@ -3,8 +3,11 @@
 <mapper namespace="com.company.mapper.BoardMapper">
 <!-- 게시글 작성 -->
 	<insert id="insert">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+			select seq_board.nextval from dual
+		</selectKey>
 	insert into spring_board(bno,title,content,writer) 
-	values(seq_board.nextval,#{title},#{content},#{writer})
+	values(#{bno},#{title},#{content},#{writer})
 	</insert>
 	
 <!-- 게시글 수정 -->
