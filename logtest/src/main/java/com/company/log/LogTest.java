@@ -1,8 +1,5 @@
 package com.company.log;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2

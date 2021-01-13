@@ -109,7 +109,7 @@ public class MemberDAO {
 	}
 	
 	public List<MemberVO> getList(){
-		List<MemberVO> list= new ArrayList();
+		List<MemberVO> list= new ArrayList<>();
 		
 		try {
 			String sql="select*from memberTBL";

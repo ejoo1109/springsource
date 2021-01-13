@@ -16,5 +16,5 @@ public class MemberVO {
 	private String password;
 	private String name;
 	private String gender;
-	private String email;
+	private String email; 
 }

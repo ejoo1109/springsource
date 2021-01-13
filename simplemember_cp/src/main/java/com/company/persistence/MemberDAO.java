@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.company.domain.MemberVO;
-import static com.company.persistence.JDBCUtil.*;
 
 @Repository
 public class MemberDAO {
@@ -95,7 +94,7 @@ public class MemberDAO {
 	}
 	
 	public List<MemberVO> getList(){
-		List<MemberVO> list= new ArrayList();
+		List<MemberVO> list= new ArrayList<>();
 		
 		try {
 			String sql="select*from memberTBL";

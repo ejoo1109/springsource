@@ -77,7 +77,7 @@
                             			<li class="paginate_button previous"><a href="${pageVO.startPage-1}">Previous</a>
                             		</c:if>
                             		<c:forEach var="idx" begin="${pageVO.startPage}" end="${pageVO.endPage}">
-                            			<li class="paginate_button" ${pageVO.cri.pageNum==idx?'active':''}><a href="${idx}">${idx}</a>
+                            			<li class="paginate_button ${pageVO.cri.pageNum==idx?'active':''}"><a href="${idx}">${idx}</a>
                             		</c:forEach>
                             		<c:if test="${pageVO.next}">
                             			<li class="paginate_button next"><a href="${pageVO.endPage+1}">Next</a>
