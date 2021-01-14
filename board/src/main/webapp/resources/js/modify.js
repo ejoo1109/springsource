@@ -14,14 +14,16 @@
 		
 		if(oper == 'remove'){
 			 form.attr("action","remove");
+		
 		}else if(oper == 'modify'){
 			//원래의 수정 폼 보내기
 			form = $("form[role='form']");
+			
 		}else if(oper == 'list'){
 			 form.attr("action","list")
 			 //메소드 속성을 get으로 바꿔서 submit요청
-			 	 .attr("method","get"); 
-			 	 //폼 안의 bno 제거하기
+			 form.attr("method","get"); 
+			 //폼 안의 bno 제거하기
 			 form.find("input[name='bno']").remove();
 		}
 		form.submit();

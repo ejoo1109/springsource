@@ -43,6 +43,8 @@
             </div>
 <%-- 페이지 나누기를 위해 필요한 값 세팅 --%>     
 <form action="modify" id="myform">
+	<input type="hidden" name="type" value="${cri.type}"/>
+	<input type="hidden" name="keyword" value="${cri.keyword}"/>
 	<input type="hidden" name="bno" value="${board.bno}"/>
 	<input type="hidden" name="pageNum" value="${cri.pageNum}"/>
 	<input type="hidden" name="amount" value="${cri.amount}"/>	

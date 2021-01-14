@@ -13,6 +13,6 @@ public interface BoardMapper {
 	public int delete(int bno);
 	public BoardVO read(int bno);
 	public List<BoardVO> list(Criteria cri);
-	public int totalCnt();
+	public int totalCnt(Criteria cri);
 	
 }

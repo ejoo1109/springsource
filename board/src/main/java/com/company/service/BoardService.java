@@ -18,5 +18,5 @@ public interface BoardService {
 	//게시글 조회-전체
 	public List<BoardVO> getList(Criteria cri);
 	//전체 게시물 수
-	public int getTotalCnt();
+	public int getTotalCnt(Criteria cri);
 }

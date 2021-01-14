@@ -49,7 +49,7 @@ public class BoardController {
 		//전체 목록 요청
 		List<BoardVO> list = service.getList(cri); 
 		//전체 게시물 수 요청
-		int total=service.getTotalCnt();
+		int total=service.getTotalCnt(cri);
 		model.addAttribute("list",list);
 		//pageVO라는 이름으로 PageVO에서 필요한 cri와 total값을 담음
 		model.addAttribute("pageVO", new PageVO(cri, total)); 
@@ -75,6 +75,8 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("result","success"); //세션담기
 		//주소줄에 따라가는 형태 :객체로 못보내서 각각 보내야함
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		
@@ -90,6 +92,8 @@ public class BoardController {
 		service.modify(board);
 		
 		rttr.addFlashAttribute("result","success");
+		rttr.addAttribute("type",cri.getType());
+		rttr.addAttribute("keyword",cri.getKeyword());
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		
