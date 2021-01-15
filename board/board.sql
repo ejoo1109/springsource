@@ -98,3 +98,22 @@ from(select /*+INDEX_DESC(spring_board pk_spring_board)*/
 	from spring_board where (title like '%제목%' or content like '%내용%' 
 	or writer like '홍길동') and rownum<=10)
 where rn>0;
+
+--댓글 테이블
+create table spring_reply(
+	rno number(10,0) constraint pk_reply primary key, --댓글 글번호
+	bno number(10,0) not null, --원본글 글번호
+	reply varchar2(1000) not null, --댓글
+	replyer varchar2(50) not null, --댓글 작성자
+	replyDate date default sysdate, -- 댓글 작성일
+	updateDate date default sysdate, --댓글 수정일
+	constraint fk_reply_board foreign key(bno) references spring_board(bno) --외래키 설정
+)
+
+create sequence seq_reply;
+
+--인덱스 생성
+create index idx_reply on spring_reply(bno desc,rno asc);
+
+
+select * from spring_reply;
