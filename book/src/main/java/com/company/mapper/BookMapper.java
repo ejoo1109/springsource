@@ -13,5 +13,6 @@ public interface BookMapper {
 	public int update(@Param("code")int code,@Param("price") int price); 
 	public List<BookVO> selectAll();
 	public List<BookVO> search(@Param("criteria")String criteria,@Param("keyword") String keyword);
+	public int update(BookVO vo);
 	
 }

@@ -6,7 +6,7 @@ import com.company.domain.BookVO;
 
 public interface BookService {
 	//도서정보 입력
-	public boolean insertBook(BookVO book);
+	public boolean insertBook(BookVO vo);
 	//도서 정보 삭제
 	public boolean removeBook(int code);
 	//도서 정보 수정

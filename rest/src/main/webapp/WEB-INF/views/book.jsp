@@ -69,14 +69,15 @@ $(function(){
 	})
 	//도서 정보 수정
 	$("#update").click(function(){ //코드 , 가격
-		let param = { //자바스크립트 param 객체
+		let param = { //자바스크립트 param 객체 (key,value형태)
 			code : 1004,
 			price : 33000
 	}
 	$.ajax({
 		url:'/update',
-		type:"put",
+		type:"put", //patch 수정
 		contentType:"application/json", //json형태로 보여주기 위한 type 변환
+		//변환을 안시키면 기본형태로 가기 때문에 에러 application/x-www-form-urlencoded;charset=UTF-8
 		data:JSON.stringify(param), //자바스크립트 객체를 JSON형태로 변환시킴
 		success:function(data){
 			$(".table").html(data);
@@ -87,11 +88,29 @@ $(function(){
 	})
 	})
 	$("#input").click(function(){
-		
+		let param = { 
+				code : 1013,
+				title : 'do it java',
+				writer : '홍길동',
+				price : 33000
+		}
+		$.ajax({
+			url:'/new',
+			type:"post", 
+			contentType:"application/json", //json형태로 보여주기 위한 type 변환
+			//변환을 안시키면 기본형태로 가기 때문에 에러 application/x-www-form-urlencoded;charset=UTF-8
+			data:JSON.stringify(param), //자바스크립트 객체를 JSON형태로 변환시킴
+			success:function(data){
+				$(".table").html(data);
+			},
+			error:function(xhr,txtSatus,error){
+				$(".table").html(xhr.responseText);
+			}
 	})
 	
 	})
-
+	
+})
 </script>
 </body>
 </html>

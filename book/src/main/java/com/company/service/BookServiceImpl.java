@@ -14,8 +14,8 @@ public class BookServiceImpl implements BookService {
 	private BookMapper mapper;
 
 	@Override
-	public boolean insertBook(BookVO book) {
-		return mapper.insert(book)>0?true:false;
+	public boolean insertBook(BookVO vo) {
+		return mapper.insert(vo)>0?true:false;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public boolean updateBook(int code, int price) {
-		return mapper.update(code, price)>0?true:false;
+		return mapper.update(code,price)>0?true:false;
 	}
 
 	@Override

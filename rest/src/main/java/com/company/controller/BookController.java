@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,7 @@ public class BookController {
 	}
 	
 	// /{코드번호} 주소+ PUT : 번호에 해당하는 도서 정보 수정
+	// jsp에서 json 타입변환으로 넘겨줄때 받을때에는 @RequestBody가 반드시 있어야함
 	@PutMapping("/update")
 	public ResponseEntity<String> update(@RequestBody BookVO vo){
 		log.info("도서 정보 수정 "+vo.getCode() + " 가격 : "+vo.getPrice());
@@ -59,5 +61,20 @@ public class BookController {
 			new ResponseEntity<String>("fail",HttpStatus.BAD_REQUEST);
 	}
 	
+	// /주소 + POST : 해당정보 새로등록
+	@PostMapping("/new")
+	public ResponseEntity<String> insert(@RequestBody BookVO vo){
+		log.info("도서 정보 입력 "+vo);
+		return  service.insertBook(vo)?
+			new ResponseEntity<String>("success", HttpStatus.OK):
+			new ResponseEntity<String>("fail",HttpStatus.BAD_REQUEST);
+	}
 	
+	@PostMapping("/insert")
+	public ResponseEntity<String> insertPost(BookVO vo){
+		log.info("도서 정보 입력 "+vo);
+		return  service.insertBook(vo)?
+			new ResponseEntity<String>("success", HttpStatus.OK):
+			new ResponseEntity<String>("fail",HttpStatus.BAD_REQUEST);
+	}
 }

@@ -53,4 +53,24 @@ public class HomeController {
 		logger.info("book.jsp 요청");
 	}
 	
+	@GetMapping("/insert")
+	public String insertGet() {
+		logger.info("book_insert 요청");
+		return "book_insert";
+	}
+	
+	@GetMapping("/step2")
+	public void registerGet() {
+		logger.info("register 요청");
+	}
+	
+	@GetMapping("/changePwd")
+	public void changepwd() {
+		logger.info("change 요청");
+	}
+	
+	@GetMapping("/leave")
+	public void leave() {
+		logger.info("leave 요청");
+	}
 }
