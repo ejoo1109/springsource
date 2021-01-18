@@ -14,8 +14,21 @@ create sequence seq_board;
 select*from spring_board;
 
 insert into spring_board(bno,title,content,writer) 
-values(seq_board.nextval,'자바','자바','자바');
-
+values(seq_board.nextval,'자바 기초','자바기초','홍길동');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'이것이 자바다','이것이 자바다','홍길서');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'spring 기초','spring 기초','홍길남');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'MySQL','MySQL','홍길북');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'Ajax','Ajax','북길동');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'HTML','HTML','서길동');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'통합 화면 구현','통합 화면 구현','동길동');
+insert into spring_board(bno,title,content,writer) 
+values(seq_board.nextval,'테스트','테스트','남길동');
 -------------------------------------------------------------
 -- page(페이지) 나누기 : rownum (데이터의 순번 매기기)
 select rownum, bno, title from spring_board where rownum <=10;
@@ -117,3 +130,6 @@ create index idx_reply on spring_reply(bno desc,rno asc);
 
 
 select * from spring_reply;
+
+insert into spring_reply(rno,bno,reply,replyer)
+values(seq_reply.nextval,'1065','댓글을 작성합니다','홍길동');
