@@ -31,7 +31,7 @@
 		<![CDATA[
 	select *
 	from(select /*+INDEX_DESC(spring_board pk_spring_board)*/
-			rownum rn, bno, title, writer, regdate, updatedate
+			rownum rn, bno, title, writer, regdate, updatedate, replycnt
 			from spring_board
 			where 
 			]]>
@@ -50,7 +50,12 @@
 		<include refid="criteria"></include>
 		bno>0
 	</select>
-	
+
+<!-- 댓글 개수 업데이트 -->
+	<update id="updateReplyCnt">
+		update spring_board set replycnt=replycnt+#{amount}
+		where bno=#{bno}
+	</update>
 <!-- 동적 SQL -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=")AND" prefixOverrides="OR">

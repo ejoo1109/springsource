@@ -56,8 +56,8 @@
 			modal.find("input").val("");
 			//2. 모달창 닫기
 			modal.modal("hide");
-			//3.리스트 보여주기
-			showList(1);
+			//3.리스트 보여주기-댓글 작성시 마지막 페이지 보여주기
+			showList(-1);
 		}
 	});
 	})//add end
@@ -68,11 +68,20 @@
 	function showList(page){
 	replyService.getList({bno:bnoVal,page:page},function(total,data){
 		console.log(data);
+		
+		//새 댓글 작성시 http://localhost:8080/replies/pages/-1
+		if(page ==-1){ //마지막 페이지를 알아내기 위한 작업
+			pageNum=Math.ceil(total/10.0);
+			showList(pageNum);
+			return;
+		}
+
 		//보여줄 댓글이 없다면 
 		if(data==null||data.length==0){
 			replyUl.html("");
 			return;		
 		}
+
 		//댓글이 존재한다면
 		let str="";
 		for(var i=0,len=data.length||0;i<len;i++){
@@ -122,13 +131,19 @@
 		}
 		if(next){
 			str+="<li class='page-item'><a class='page-link' href='"+(endPage-1)+"'>";
-			str+="Previous</a></li>";
+			str+="next</a></li>";
 		}
 		str+="</ul>";
 		replyPageFooter.html(str);
-		
 	};
 		
+		//댓글 페이지 나누기 번호 클릭시 동작
+		replyPageFooter.on("click","li a",function(e){
+			e.preventDefault();
+			
+			pageNum = $(this).attr("href");
+			showList(pageNum);
+		})
 	
 	//댓글 삭제
 	$(modalRemoveBtn).click(function(){
@@ -136,7 +151,7 @@
 			if(result){
 			//alert("result : "+ result);
 			modal.modal("hide");
-			showList(1);
+			showList(pageNum);
 		}
 	}); //delete end
 		
@@ -154,7 +169,7 @@
 		if(result){
 			//alert("result : "+ result);
 			modal.modal("hide");
-			showList(1);
+			showList(pageNum);
 		}
 	})//update end
 		

@@ -1,39 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-  <Appenders>    
-    <!-- Console Appender -->
-    <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-    </Console>
-    
-    <!-- File Appender -->
-    <File name="File" fileName="log/application.log">
-      <PatternLayout>
-        <pattern>%d %p %C{1.} [%t] %m%n</pattern>
-      </PatternLayout>
-    </File>
-  </Appenders>
-  
-  <Loggers>
+	<context:component-scan base-package="com.company.service"/>
+	<mybatis-spring:scan base-package="com.company.mapper"/>
+		
+	<!-- Hikari CP -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="javaDB" />
+		<property name="password" value="12345" />
+	</bean>
+	
+	<!-- DataSource -->
+	<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
 
-	<!-- 개발자가 만든 클래스 로깅 처리 -->
-  	<logger name="com.company.transaction" level="debug">
-  		<AppenderRef ref="File"/>
-  	</logger>
-  	
-  	<logger name="com.company.service" level="debug"/>
-  	<logger name="com.company.mapper" level="debug"/>
+	<!-- mybatis SQL Session -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"/>
+	</bean>
 
-	<!-- 스프링 프레임워크 로깅 처리 -->
-	  	<logger name="org.springframework.core" level="info"/>
-	  	<logger name="org.springframework.beans" level="info"/>  	
-	  	<logger name="org.springframework.context" level="info"/>  	
-	  	<logger name="org.springframework.web" level="info"/>
-	  	<logger name="org.springframework.jdbc" level="debug"/>
-	  	
-    <Root level="info">
-      <AppenderRef ref="Console"/>
-    </Root>
-  </Loggers>
-</Configuration>
+
+	<!-- 트랜잭션 -->
+	<!-- 트랜잭션 관리 : 매니저 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"/>
+	</bean>
+	
+	<!-- Proxy -->
+	<!-- <tx:advice id="txManager" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="addData"/>
+		</tx:attributes>
+	</tx:advice> -->
+	
+	<tx:annotation-driven/>
+	
+	
+
+	<!--<aop:config>
+		<aop:pointcut expression="execution(* com.company.service..*(..))" id="pointcut"/>
+		<aop:advisor advice-ref="txManager" pointcut-ref="pointcut"/>
+	</aop:config> -->
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+</beans>

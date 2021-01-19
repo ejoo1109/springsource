@@ -118,6 +118,4 @@ var replyService = (function(){
 		get : get,
 		displayTime:displayTime
 	}
-	
-	
-})();
+})();//즉시 호출을 뜻하는 함수의 형태

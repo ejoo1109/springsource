@@ -133,3 +133,13 @@ select * from spring_reply;
 
 insert into spring_reply(rno,bno,reply,replyer)
 values(seq_reply.nextval,'1065','댓글을 작성합니다','홍길동');
+
+-- 댓글 개수를 저장할 컬럼 생성(spring_board)
+alter table spring_board add(replycnt number default 0);
+
+select*from spring_board order by bno desc;
+
+-- 이미 들어간 댓글 갯수 삽입
+update spring_board
+set replycnt = (select count(rno) from spring_reply 
+where spring_board.bno=spring_reply.bno);
