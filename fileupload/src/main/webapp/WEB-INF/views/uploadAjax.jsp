@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/resources/css/mycss.css" />
 </head>
 <body>
 	<h1>Upload Ajax</h1>
@@ -25,7 +26,7 @@ $(function(){
 		console.log(inputFile);
 		
 		//첨부파일 목록
-		var files = inputFile[0].files;
+		var files = inputFile[0].files;//한개의 파일일때는  $("input[name='uploadFile']")[0].files[0]
 		
 		// <form>~~</form> 대체로 ajax로 데이터를 쉽게 전송할 수 있도록 해줌
 		var formData = new FormData();
@@ -48,8 +49,8 @@ $(function(){
 			//기본값은 application/x-www-form-urlencoded임(파일첨부이므로 multipart/form-data로 보내야함)
 			contentType:false,
 			data:formData,
-			success:function(result){
-				//console.log(result);
+			success:function(result){ //result는 컨트롤러에서 상태코드가 넘어오는 값을 의미함
+				console.log(result);
 				showUploadFile(result);
 			},
 			error:function(xhr,status,error){
@@ -59,15 +60,23 @@ $(function(){
 	})
 	
 	function showUploadFile(uploadResultArr){
-		//파일을 올렸을때 결과를 보여줄 영역 가져오기
+		//파일을 올렸을때 파일명을 보여줄 영역 가져오기
 		var uploadResult = $(".uploadResult ul");
 		var str="";
-		$(uploadResultArr).each(function(idx,obj){
-			str+="<li>"+obj.fileName+"</li>";
+		$(uploadResultArr).each(function(idx,obj){ //obj: 임의의 변수
+			if(obj.image){
+				//썸네일 이미지 경로 - 한글과 기호떄문에 인코딩해서 보내줌
+				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
+				//str += "<li>"+obj.uploadPath+"\\" + obj.uuid + "\\" + obj.fileName+"</li>";
+				str+="<li><img src='/display?fileName="+fileCallPath+"'>"+obj.fileName+"</li>";
+			}else{
+				//첨부파일 (img제외한파일) 그림표시 작업
+			str += "<li><img src='/resources/img/attach.png'>"+obj.fileName+"</li>";
+			}
 		});
 		uploadResult.append(str);
 	}
-})
+}) 
 </script>
 </body>
 </html>
