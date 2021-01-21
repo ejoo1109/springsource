@@ -16,6 +16,9 @@
 	<div class="uploadResult">
 		<ul></ul>
 	</div>
+	<div class="bigPictureWrapper">
+		<div class="bigPicture"></div>
+	</div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script>
 $(function(){
@@ -67,16 +70,72 @@ $(function(){
 			if(obj.image){
 				//썸네일 이미지 경로 - 한글과 기호떄문에 인코딩해서 보내줌
 				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
+				//원본 이미지 경로
+				var originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName;
+				
+				originPath = originPath.replace(new RegExp(/\\/g),"/");
+				
+				//만약 다운로드 작업하려면 s_ 는 제외한 fileCallPath 수정한다.
 				//str += "<li>"+obj.uploadPath+"\\" + obj.uuid + "\\" + obj.fileName+"</li>";
-				str+="<li><img src='/display?fileName="+fileCallPath+"'>"+obj.fileName+"</li>";
+				
+				str+="<li>";
+				str+="<a href=\"javascript:showImage(\'"+originPath+"\')\">";
+				str+="<img src='/display?fileName="+fileCallPath+"'>"+obj.fileName+"</a>"
+				str += "<span data-file='"+fileCallPath+"' data-type='image'> x </span>";
+				str +="</li>";
 			}else{
-				//첨부파일 (img제외한파일) 그림표시 작업
-			str += "<li><img src='/resources/img/attach.png'>"+obj.fileName+"</li>";
+			//일반 파일 경로 2021\01\21\fdfd_text.txt
+			var fileCallPath = encodeURIComponent(obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName);
+			str += "<li><a href='/download?fileName="+fileCallPath+"'>";
+			str += "<img src='/resources/img/attach.png'>"+obj.fileName+"</a>";
+			str += "<span data-file='"+fileCallPath+"' data-type='file'> x </span>";
+			str += "</li>"; //첨부파일 (img제외한파일) 그림표시 작업
 			}
 		});
 		uploadResult.append(str);
 	}
-}) 
+	//이지 파일 첨부한후 밑에 큰 이미지 다시 누르면 사라지게 하기
+	$(".bigPictureWrapper").click(function(){
+		$(".bigPicture").animate({width:'0%', height:'0%'},1000);
+		setTimeout(function(){
+			$(".bigPictureWrapper").hide();
+		},1000);
+	})
+	
+	//x버튼 클릭 - 이벤트 위임
+	 $(".uploadResult ul").on("click","span",function(){
+		 
+		 //해당 파일 경로 가져오기 this==span 속성.data
+		 var targetFile=$(this).data("file");
+		 //파일 타입 가져오기
+		 var type=$(this).data("type");
+		 //span 태그가 속한 부모 li태그 가져오기
+		 var targetLi=$(this).closest("li");
+		 
+		 //서버폴더에서 제거
+		 $.ajax({
+			url:'/deleteFile',
+			type:'post',
+			data:{
+				fileName:targetFile,
+				type:type
+			},
+			success:function(result){
+				console.log(result);
+				 //화면 목록에서 제거
+				 targetLi.remove();
+			}
+		 })
+	 })
+	
+})
+//이미지 파일 첨부한후 클릭시 밑에 큰 이미지로 나타내기
+function showImage(fileCallPath){
+	$(".bigPictureWrapper").css("display","flex").show();
+	$(".bigPicture").html("<img src='/display?fileName="+fileCallPath+"'>")
+					.animate({width:'100%', height:'100%'},1000); //1초 동안 서서히 띄우기
+}
+ 
 </script>
 </body>
 </html>
