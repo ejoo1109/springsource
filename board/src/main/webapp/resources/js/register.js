@@ -1,28 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/mycss.css" />
-</head>
-<body>
-	<h1>Upload Ajax</h1>
-	<div class="uploadDiv">
-		<input type="file" name="uploadFile" id="" multiple/>
-	</div>
-	<button>upload</button>
-	<div class="uploadResult">
-		<ul></ul>
-	</div>
-	<div class="bigPictureWrapper">
-		<div class="bigPicture"></div>
-	</div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script>
+/**
+ * 파일 첨부와 관련된 스크립트
+ */
 $(function(){
-	$("button").click(function(){
+	//게시글 등록버튼 동작막기
+	$("button[type='submit']").click(function(e){
+		e.preventDefault();
+		
+		var str="";
+		//첨부파일 영역에 정보 수집
+		$(".uploadResult ul li").each(function(idx,obj){
+			var job=$(obj);
+		//수집된 정보를 hidden 태그로 작성
+			str+="<input type='hidden' name='attachList["+idx+"].uuid' value='"+job.data("uuid")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].uploadPath' value='"+job.data("uploadPath")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].fileName' value='"+job.data("fileName")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].fileType' value='"+job.data("fileType")+"'>";
+		})
+		console.log(str);
+
+		
+		//hidden 태그를 게시글 등록 폼에 추가한 후 폼 전송하기
+		
+	})
+	
+	
+	
+	
+	
+	//파일버튼이 클릭되어 변화가 일어나는 경우
+	//현재 목록의 파일을 서버로 보내서 저장하기
+	$("input[type='file']").change(function(){
 		console.log("업로드 호출");
 		
 		var inputFile = $("input[name='uploadFile']");
@@ -38,12 +45,7 @@ $(function(){
 		for(var i=0;i<files.length;i++){
 			formData.append("uploadFile",files[i]);
 		}
-	/* 	for(let key of formData.keys()){
-			console.log(key);
-		}
-		for(let value of formData.keys()){
-			console.log(key);
-		} */
+
 		$.ajax({
 			url:"/uploadAjax",
 			type:"post",
@@ -60,15 +62,14 @@ $(function(){
 				console.log(status);
 			}
 		})
-	})
-	
-	function showUploadFile(uploadResultArr){
+	}) //input close
+		function showUploadFile(uploadResultArr){
 		//파일을 올렸을때 파일명을 보여줄 영역 가져오기
 		var uploadResult = $(".uploadResult ul");
 		var str="";
 		$(uploadResultArr).each(function(idx,obj){ //obj: 임의의 변수
-			if(obj.image){
-				//썸네일 이미지 경로 - 한글과 기호때문에 인코딩해서 보내줌
+			if(obj.fileType){
+				//썸네일 이미지 경로 - 한글과 기호떄문에 인코딩해서 보내줌
 				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
 				//원본 이미지 경로
 				var originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName;
@@ -78,23 +79,33 @@ $(function(){
 				//만약 다운로드 작업하려면 s_ 는 제외한 fileCallPath 수정한다.
 				//str += "<li>"+obj.uploadPath+"\\" + obj.uuid + "\\" + obj.fileName+"</li>";
 				
-				str+="<li>";
+				str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+				str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
 				str+="<a href=\"javascript:showImage(\'"+originPath+"\')\">";
-				str+="<img src='/display?fileName="+fileCallPath+"'>"+obj.fileName+"</a>"
-				str += "<span data-file='"+fileCallPath+"' data-type='image'> x </span>";
-				str +="</li>";
+				str+="<img src='/display?fileName="+fileCallPath+"'><div>"+obj.fileName+"</a>";
+				str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
+				str+=fileCallPath+"' data-type='image'>";
+				str+="<i class='fa fa-times'></i>";
+				str+="</button>";
+				str+="</div></li>";
 			}else{
-			//일반 파일 경로 2021\01\21\fdfd_text.txt
-			var fileCallPath = encodeURIComponent(obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName);
-			str += "<li><a href='/download?fileName="+fileCallPath+"'>";
-			str += "<img src='/resources/img/attach.png'>"+obj.fileName+"</a>";
-			str += "<span data-file='"+fileCallPath+"' data-type='file'> x </span>";
-			str += "</li>"; //첨부파일 (img제외한파일) 그림표시 작업
+				//일반 파일 경로 2021\01\21\fdfd_text.txt
+				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName);
+				str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+				str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+				str+="<a href='/download?fileName="+fileCallPath+"'>";
+				str+="<img src='/resources/img/attach.png'><div>"+obj.fileName+"</a>";
+				str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
+				str+=fileCallPath+"' data-type='file'>";
+				str+="<i class='fa fa-times'></i>";
+				str+="</button>";
+				str+="</div></li>"; //첨부파일 (img제외한파일) 그림표시 작업
 			}
 		});
 		uploadResult.append(str);
-	}
-	//이미지 파일 첨부한후 밑에 큰 이미지 다시 누르면 사라지게 하기
+	} //showUploadFile close
+	
+		//이미지 파일 첨부한후 밑에 큰 이미지 다시 누르면 사라지게 하기
 	$(".bigPictureWrapper").click(function(){
 		$(".bigPicture").animate({width:'0%', height:'0%'},1000);
 		setTimeout(function(){
@@ -102,8 +113,8 @@ $(function(){
 		},1000);
 	})
 	
-	//x버튼 클릭 - 이벤트 위임
-	 $(".uploadResult ul").on("click","span",function(){
+		//x버튼 클릭 - 이벤트 위임
+	 $(".uploadResult ul").on("click","button",function(){
 		 
 		 //해당 파일 경로 가져오기 this==span 속성.data
 		 var targetFile=$(this).data("file");
@@ -126,16 +137,10 @@ $(function(){
 				 targetLi.remove();
 			}
 		 })
-	 })
-	
+	 })//x버튼 종료
 })
-//이미지 파일 첨부한후 클릭시 밑에 큰 이미지로 나타내기
 function showImage(fileCallPath){
 	$(".bigPictureWrapper").css("display","flex").show();
 	$(".bigPicture").html("<img src='/display?fileName="+fileCallPath+"'>")
 					.animate({width:'100%', height:'100%'},1000); //1초 동안 서서히 띄우기
 }
- 
-</script>
-</body>
-</html>

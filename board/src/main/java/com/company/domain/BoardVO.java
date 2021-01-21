@@ -1,6 +1,7 @@
 package com.company.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,7 @@ public class BoardVO {
 	private Date regdate;
 	private Date updatedate;
 	private int replycnt; //게시글 옆의 칼럼수 추가
+	
+	//파일 첨부 목록
+	private List<FileAttach> attachList;
 }
