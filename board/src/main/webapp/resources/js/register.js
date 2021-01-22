@@ -7,24 +7,27 @@ $(function(){
 		e.preventDefault();
 		
 		var str="";
-		//첨부파일 영역에 정보 수집
+		//첨부파일 영역의 정보 수집
 		$(".uploadResult ul li").each(function(idx,obj){
 			var job=$(obj);
 		//수집된 정보를 hidden 태그로 작성
 			str+="<input type='hidden' name='attachList["+idx+"].uuid' value='"+job.data("uuid")+"'>";
-			str+="<input type='hidden' name='attachList["+idx+"].uploadPath' value='"+job.data("uploadPath")+"'>";
-			str+="<input type='hidden' name='attachList["+idx+"].fileName' value='"+job.data("fileName")+"'>";
-			str+="<input type='hidden' name='attachList["+idx+"].fileType' value='"+job.data("fileType")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].uploadPath' value='"+job.data("path")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].fileName' value='"+job.data("filename")+"'>";
+			str+="<input type='hidden' name='attachList["+idx+"].fileType' value='"+job.data("type")+"'>";
 		})
 		console.log(str);
 
 		
 		//hidden 태그를 게시글 등록 폼에 추가한 후 폼 전송하기
-		
-	})
-	
-	
-	
+		//1.게시글 등록 폼 가져오기
+		var form = $("form");
+		//2. 폼에 추가하기
+		form.append(str);
+		//3.전송
+		form.submit();
+				
+	})	
 	
 	
 	//파일버튼이 클릭되어 변화가 일어나는 경우
@@ -56,7 +59,8 @@ $(function(){
 			data:formData,
 			success:function(result){ //result는 컨트롤러에서 상태코드가 넘어오는 값을 의미함
 				console.log(result);
-				showUploadFile(result);
+				showUploadFile(result); //첨부파일 업로드 후 파일이름 남지않게 하기
+				$("input[name='uploadFile']").val("");
 			},
 			error:function(xhr,status,error){
 				console.log(status);
@@ -69,37 +73,37 @@ $(function(){
 		var str="";
 		$(uploadResultArr).each(function(idx,obj){ //obj: 임의의 변수
 			if(obj.fileType){
-				//썸네일 이미지 경로 - 한글과 기호떄문에 인코딩해서 보내줌
-				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
-				//원본 이미지 경로
-				var originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName;
-				
-				originPath = originPath.replace(new RegExp(/\\/g),"/");
-				
-				//만약 다운로드 작업하려면 s_ 는 제외한 fileCallPath 수정한다.
-				//str += "<li>"+obj.uploadPath+"\\" + obj.uuid + "\\" + obj.fileName+"</li>";
-				
-				str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
-				str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
-				str+="<a href=\"javascript:showImage(\'"+originPath+"\')\">";
-				str+="<img src='/display?fileName="+fileCallPath+"'><div>"+obj.fileName+"</a>";
-				str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
-				str+=fileCallPath+"' data-type='image'>";
-				str+="<i class='fa fa-times'></i>";
-				str+="</button>";
-				str+="</div></li>";
+					//썸네일 이미지 경로 - 한글과 기호때문에 인코딩해서 보내줌
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
+					//원본 이미지 경로
+					var originPath = obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName;
+					
+					originPath = originPath.replace(new RegExp(/\\/g),"/");
+					
+					//만약 다운로드 작업하려면 s_ 는 제외한 fileCallPath 수정한다.
+					//str += "<li>"+obj.uploadPath+"\\" + obj.uuid + "\\" + obj.fileName+"</li>";
+					
+					str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+					str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+					str+="<a href=\"javascript:showImage(\'"+originPath+"\')\">";
+					str+="<img src='/display?fileName="+fileCallPath+"'><div>"+obj.fileName+"</a>";
+					str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
+					str+=fileCallPath+"' data-type='image'>";
+					str+="<i class='fa fa-times'></i>";
+					str+="</button>";
+					str+="</div></li>";
 			}else{
 				//일반 파일 경로 2021\01\21\fdfd_text.txt
-				var fileCallPath = encodeURIComponent(obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName);
-				str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
-				str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
-				str+="<a href='/download?fileName="+fileCallPath+"'>";
-				str+="<img src='/resources/img/attach.png'><div>"+obj.fileName+"</a>";
-				str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
-				str+=fileCallPath+"' data-type='file'>";
-				str+="<i class='fa fa-times'></i>";
-				str+="</button>";
-				str+="</div></li>"; //첨부파일 (img제외한파일) 그림표시 작업
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"\\"+obj.uuid+"_"+obj.fileName);
+					str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+					str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+					str+="<a href='/download?fileName="+fileCallPath+"'>";
+					str+="<img src='/resources/img/attach.png'><div>"+obj.fileName+"</a>";
+					str+="<button type='button' class='btn btn-danger btn-circle' data-file='";
+					str+=fileCallPath+"' data-type='file'>";
+					str+="<i class='fa fa-times'></i>";
+					str+="</button>";
+					str+="</div></li>"; //첨부파일 (img제외한파일) 그림표시 작업
 			}
 		});
 		uploadResult.append(str);
@@ -112,7 +116,7 @@ $(function(){
 			$(".bigPictureWrapper").hide();
 		},1000);
 	})
-	
+
 		//x버튼 클릭 - 이벤트 위임
 	 $(".uploadResult ul").on("click","button",function(){
 		 

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<link rel="stylesheet" href="/resources/css/mycss.css" />
 <%@include file="../includes/header.jsp" %>
             <div class="row">
                 <div class="col-lg-12">
@@ -41,6 +41,23 @@
                 	</div>
                 </div>
             </div>
+<%--첨부파일 보여주기 --%>
+<div class="bigPictureWrapper">
+		<div class="bigPicture"></div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading"><i class="fa fas fa-file"></i> Files</div>
+			<div class="panel-body">
+				<div class="uploadResult">
+					<ul></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>   
+
 <%-- 페이지 나누기를 위해 필요한 값 세팅 --%>     
 <form action="modify" id="myform">
 	<input type="hidden" name="type" value="${cri.type}"/>

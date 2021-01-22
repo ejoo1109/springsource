@@ -56,6 +56,11 @@
 		update spring_board set replycnt=replycnt+#{amount}
 		where bno=#{bno}
 	</update>
+	
+<!-- 첨부파일 가져오기 -->
+	<select id="attachList" resultType="com.company.domain.FileAttach">
+		select * from spring_attach where bno=#{bno}
+	</select>
 <!-- 동적 SQL -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=")AND" prefixOverrides="OR">

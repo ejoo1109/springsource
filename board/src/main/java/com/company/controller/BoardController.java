@@ -3,6 +3,9 @@ package com.company.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.company.domain.BoardVO;
 import com.company.domain.Criteria;
+import com.company.domain.FileAttach;
 import com.company.domain.PageVO;
 import com.company.service.BoardService;
 
@@ -34,13 +38,20 @@ public class BoardController {
 	//게시글 작성
 	@PostMapping("/register")
 	public String registerPost(BoardVO board,RedirectAttributes rttr) {
-		//if(service.regist()) {
 		log.info("게시글 등록"+board);
-		service.regist(board); 
+		
+		//파일 첨부 확인
+//		if(board.getAttachList() != null) {
+//			board.getAttachList().forEach(attach -> log.info(""+attach));
+//		}
+		
 		log.info("게시글 번호 "+board.getBno());
-		//등록성공시 메시지를 모달로 띄우기 위해 조금 전 등록된 글 번호 보내기
-		rttr.addFlashAttribute("result", board.getBno()); 
-			return "redirect:list";
+		if(service.regist(board)) { //서비스임플에서 첨부파일이 있다면 리스트로 보내기
+			//등록성공시 메시지를 모달로 띄우기 위해 조금 전 등록된 글 번호 보내기
+			rttr.addFlashAttribute("result", board.getBno()); 
+			return "redirect:list";			
+		}
+		return "/board/register"; //서비스임플에서 첨부파일이 없다면 글작성 페이지
 	}
 	//전체 리스트 보여주기
 	@GetMapping("/list")
@@ -89,6 +100,13 @@ public class BoardController {
 	public String update(BoardVO board,Criteria cri, RedirectAttributes rttr) {
 		log.info("수정요청"+board);
 		log.info("criteria - "+cri);
+		
+		//수정된 파일 첨부 확인
+		if(board.getAttachList() != null) {
+			board.getAttachList().forEach(attach -> log.info(""+attach));
+		}
+		
+		
 		service.modify(board);
 		
 		rttr.addFlashAttribute("result","success");
@@ -99,7 +117,16 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
-
+	//첨부파일 가져오기
+	@GetMapping(value="/getAttachList",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<FileAttach>> getAttachList(int bno){
+		log.info("첨부파일 가져오기 : "+bno);
+		return new ResponseEntity<List<FileAttach>>(service.getAttachList(bno),HttpStatus.OK);
+	}
+	
+	
+	
+	
 	
 	}
 

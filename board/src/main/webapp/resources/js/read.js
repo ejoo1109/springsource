@@ -1,7 +1,7 @@
 /**
  * read.jsp에서 사용하는 스크립트
  */
- $(function(){
+ $(function(){ //j쿼리 시작
 	//댓글 리스트 함수 호출
 	showList(1); //1페이지로 시작
 	
@@ -205,6 +205,68 @@
 		}
 	});	
 	})
-
-	
  })
+
+// 첨부파일 가져오기
+$(document).ready(function(){ //문서가 준비되면 j쿼리 사용
+
+	var uploadResult = $(".uploadResult ul");
+	
+	$.getJSON({
+		url:'getAttachList',
+		data: {
+			bno:bnoVal		
+		},
+		success:function(data){
+			console.log(data);	
+			
+			var str="";
+								
+			$(data).each(function(idx,obj){
+				if(obj.fileType){
+					
+					//썸네일 이미지 경로 - 한글과 기호때문에 인코딩해서 보내줌
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"\\s_"+obj.uuid+"_"+obj.fileName);
+										
+					str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+					str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+					str+="<img src='/display?fileName="+fileCallPath+"'><div>"+obj.fileName;
+					str+="</div></li>";
+				}else{
+		
+					str+="<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"'";
+					str+="data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'>";
+					str+="<img src='/resources/img/attach.png'><div>"+obj.fileName+"</a>";		
+					str+="</div></li>"; //첨부파일 (img제외한파일) 그림표시 작업
+				}
+			})	
+			uploadResult.html(str);
+		}
+	}) //getJSON 종료
+	
+	//이미지 클릭시 원본 이미지 보여주기, 일반 파일은 다운로드
+	$(uploadResult).on("click","li",function(){
+		var liobj=$(this); //li
+		
+		var path=encodeURIComponent(liobj.data("path")+"\\"+liobj.data("uuid")+"_"+liobj.data("filename"));
+		
+		if(liobj.data("type")){
+			showImage(path.replace(new RegExp(/\\/g),"/"));
+		}else{
+			location.href="/download?fileName="+path;
+		}		
+	})
+
+	//이미지 파일 첨부한후 밑에 큰 이미지 다시 누르면 사라지게 하기
+	$(".bigPictureWrapper").click(function(){
+		$(".bigPicture").animate({width:'0%', height:'0%'},1000);
+		setTimeout(function(){
+			$(".bigPictureWrapper").hide();
+		},1000);
+	})
+})
+function showImage(fileCallPath){
+	$(".bigPictureWrapper").css("display","flex").show();
+	$(".bigPicture").html("<img src='/display?fileName="+fileCallPath+"'>")
+					.animate({width:'100%', height:'100%'},1000); //1초 동안 서서히 띄우기
+}
