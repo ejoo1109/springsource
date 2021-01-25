@@ -51,6 +51,9 @@
 		<div class="panel panel-default">
 			<div class="panel-heading"><i class="fa fas fa-file"></i> Files</div>
 			<div class="panel-body">
+				<div class="form-group uploadDiv">
+					<input type="file" name="uploadFile" id=""/>
+				</div>
 				<div class="uploadResult">
 					<ul></ul>
 				</div>

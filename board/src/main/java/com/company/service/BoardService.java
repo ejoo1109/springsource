@@ -22,5 +22,6 @@ public interface BoardService {
 	public int getTotalCnt(Criteria cri);
 	//첨부파일 조회
 	public List<FileAttach> getAttachList(int bno);
+	
 
 }

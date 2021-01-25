@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private AttachMapper attachmapper;
 
-	@Transactional
+	@Transactional //2개의 db작업 실시
 	@Override
 	public boolean regist(BoardVO board) {
 		
@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 	public boolean modify(BoardVO board) {
 		
 		//첨부파일 전체 삭제
-		attachmapper.delete(board.getBno());
+		attachmapper.delete(board.getBno()); //db 파일 삭제, 서버엔 파일삭제 x
 		//게시물 수정
 		boolean result= mapper.update(board)>0?true:false;
 		
@@ -58,8 +58,12 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+	@Transactional //2개의 db작업 실시
 	@Override
 	public boolean remove(int bno) {
+		//첨부파일 삭제
+		attachmapper.delete(bno);
+		//게시글 삭제
 		return mapper.delete(bno)>0?true:false;
 	}
 

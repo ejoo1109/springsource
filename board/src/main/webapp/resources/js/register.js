@@ -67,6 +67,8 @@ $(function(){
 			}
 		})
 	}) //input close
+	
+	
 		function showUploadFile(uploadResultArr){
 		//파일을 올렸을때 파일명을 보여줄 영역 가져오기
 		var uploadResult = $(".uploadResult ul");

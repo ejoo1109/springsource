@@ -160,5 +160,3 @@ alter table spring_attach
 add constraint fk_board_attach foreign key(bno) references spring_board(bno);
 
 select*from SPRING_ATTACH;
-
-drop table spring_attach;
