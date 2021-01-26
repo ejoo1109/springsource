@@ -99,13 +99,14 @@ var replyService = (function(){
 			var mi=dateObj.getMinutes();
 			var ss=dateObj.getSeconds();
 			
-			return [(hh>9?'':'0')+hh, ':', (mi>9?'':'0')+mi,':',(ss>9?'':'0')+ss].join('');
+			//9보다 클 경우 그대로, 작을경우 앞에 '0'르 붙여서 출력
+			return [(hh>9?'':'0')+hh, ':', (mi>9?'':'0')+mi,':',(sc>9?'':'0')+sc].join('');
 		}else{//댓글 작성한 날짜가 당일이 아니라면 년/월/일
 			var yy=dateObj.getFullYear();
 			var mm=dateObj.getMonth()+1;
 			var dd=dateObj.getDate();
 			
-			return [yy,'/',(mm>9?'':'0')+mm,'/',(dd>9?'':'0')+dd].join();
+			return [yy,'/',(mm>9?'':'0')+mm,'/',(dd>9?'':'0')+dd].join('');
 			
 		}
 	}
