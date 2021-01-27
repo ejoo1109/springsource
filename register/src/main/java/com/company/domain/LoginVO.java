@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-
+//로그인정보, 탈퇴시 필요한 vo
 public class LoginVO {
 	private String userid;
 	private String password;
