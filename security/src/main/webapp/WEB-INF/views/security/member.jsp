@@ -8,5 +8,9 @@
 </head>
 <body>
 	<h1>멤버가능 - member</h1>
+<form action="/logout" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
+	<button>로그아웃</button>
+</form>
 </body>
 </html>

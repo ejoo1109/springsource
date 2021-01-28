@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,5 +23,13 @@ public class SecurityController {
 	@GetMapping("/admin")
 	public void adminAccess() {
 		log.info("관리자 가능");
+	}
+	@GetMapping("/login")
+	public void loginForm(String error,Model model,String logout) {
+		log.info("로그인 폼 요청");
+		
+		if(error!=null) {
+			model.addAttribute("error","로그인 정보를 확인해 주세요");
+		}
 	}
 }
