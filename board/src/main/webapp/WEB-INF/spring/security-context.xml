@@ -11,7 +11,7 @@
 
 
 <!-- 로그인 성공시 동작하는 핸들러 객체 생성 -->
-<bean id="customLoginHandler" class="com.company.handler.CustomLoginSuccessHandler"/>
+<!-- <bean id="customLoginHandler" class="com.company.handler.CustomLoginSuccessHandler"/> -->
 
 <!-- http로 들어오는 요청에 대해 접근 통제를 위한 필터 기록 -->
 	<security:http>
@@ -25,7 +25,8 @@
 		 <security:access-denied-handler error-page="/accessError"/>
 		 
 		 <!-- 사용자가 원하는 로그인 폼을 띄우기 위해 login-pase 옵션 사용 -->
-		<security:form-login login-page="/security/login" authentication-success-handler-ref="customLoginHandler"/>
+		 <security:form-login/>
+<!-- 		<security:form-login login-page="/security/login" authentication-success-handler-ref="customLoginHandler"/> -->
 		<!-- 시큐리티가 제공하는 기본 로그아웃 : 성공하면 로그인 페이지로 이동되고 logout 파라메터 따라감 -->
 	<!--<security:logout/> -->
 	<security:logout invalidate-session="true" logout-success-url="/"/> 
@@ -34,16 +35,10 @@
 <!-- 인증을 어떤 방식으로 할 것인지 기록 -->
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<!-- user인증을 in-memory방식으로 진행 (연습용)-->
-<!-- 			<security:user-service> 
+			<security:user-service> <!-- user인증을 in-memory방식으로 진행 -->
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER" />
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER,ROLE_ADMIN" />
-			</security:user-service> -->
-			<security:jdbc-user-service data-source-ref="ds" 
-				users-by-username-query="select userid,userpw,enabled from spring_member where userid=?" 
-				authorities-by-username-query="select * from spring_member_auth where userid=?"/>
-			<security:password-encoder ref="bcryptPasswordEncoder"/>
-			<!-- test:http://localhost:8080/security/admin id=admin90 pw=pw90 -->
-			</security:authentication-provider>
+			</security:user-service>
+		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

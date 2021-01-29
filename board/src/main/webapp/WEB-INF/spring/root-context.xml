@@ -11,7 +11,9 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-<!-- 어노테이션 활성화 -->
+<!-- [<>] 태그의 에러는 상단 xml 주소의 문제 -->
+<!-- [bean] 에서의 에러는 pom.xml 내용의 문제 -->
+	<!-- 어노테이션 활성화 -->
 	<context:component-scan base-package="com.company.service"/>
 	<!-- @ControllerAdiver활성화 -->
 	<context:component-scan base-package="com.company.except"/>

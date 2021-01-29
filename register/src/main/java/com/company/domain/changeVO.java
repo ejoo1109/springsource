@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+// 비밀번호 변경시 필요한 VO
 @Getter
 @Setter
 @AllArgsConstructor
