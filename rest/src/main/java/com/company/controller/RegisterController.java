@@ -33,7 +33,7 @@ public class RegisterController {
 	
 	@PutMapping("/changePwd")
 	public ResponseEntity<String> changepwd(@RequestBody changeVO vo){
-		log.info("회원가입 요청"+vo);
+		log.info("비밀번호수정 요청"+vo);
 		vo.setUserid("hong123");
 		return service.update(vo)?
 				new ResponseEntity<String>("success",HttpStatus.OK):

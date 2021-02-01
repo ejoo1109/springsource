@@ -3,7 +3,7 @@ package com.company.service;
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
 import com.company.domain.RegisterVO;
-import com.company.domain.changeVO;
+import com.company.domain.ChangeVO;
 
 public interface RegisterService {
 	//아이디 중복
@@ -15,5 +15,5 @@ public interface RegisterService {
 	//회원탈퇴
 	public boolean leave(LoginVO login);
 	//비밀번호 수정
-	public boolean update(changeVO change);
+	public boolean update(ChangeVO change);
 }

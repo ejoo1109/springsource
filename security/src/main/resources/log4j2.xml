@@ -21,9 +21,9 @@
   	<logger name="com.company.controller" level="debug">
   		<AppenderRef ref="File"/>
   	</logger>
-  	
   	<logger name="com.company.service" level="debug"/>
   	<logger name="com.company.mapper" level="debug"/>
+  	<logger name="com.company.handler" level="debug"/>
 
 	<!-- 스프링 프레임워크 로깅 처리 -->
 	  	<logger name="org.springframework.core" level="info"/>

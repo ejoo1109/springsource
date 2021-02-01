@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
 import com.company.domain.RegisterVO;
-import com.company.domain.changeVO;
+import com.company.domain.ChangeVO;
 import com.company.service.RegisterService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -138,7 +138,7 @@ public class RegisterController {
 			log.info("비빈번호 변경 폼 보여주기");
 		}
 		@PostMapping("/changePwd")
-		public String changePost(changeVO change,@SessionAttribute AuthVO auth,HttpSession session,RedirectAttributes rttr) {
+		public String changePost(ChangeVO change,@SessionAttribute AuthVO auth,HttpSession session,RedirectAttributes rttr) {
 			//회원정보 수정 - change(password, new_password, confirm_password)
 			log.info("회원정보 수정"+change);
 			//userid 세션에서 가져와서 change에 담기

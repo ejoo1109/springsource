@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.company.domain.AuthVO;
 import com.company.domain.LoginVO;
 import com.company.domain.RegisterVO;
-import com.company.domain.changeVO;
+import com.company.domain.ChangeVO;
 import com.company.mapper.RegisterMapper;
 
 @Service
@@ -36,7 +36,7 @@ public class RegisterServiceImpl implements RegisterService {
 	}
 
 	@Override
-	public boolean update(changeVO change) {
+	public boolean update(ChangeVO change) {
 		return mapper.updateMember(change)>0?true:false;
 	}
 

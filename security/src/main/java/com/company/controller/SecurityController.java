@@ -1,5 +1,6 @@
 package com.company.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,5 +32,17 @@ public class SecurityController {
 		if(error!=null) {
 			model.addAttribute("error","로그인 정보를 확인해 주세요");
 		}
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
+	@GetMapping("/doMember")
+	public void doMember() {
+		log.info("doMember 호출");
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@GetMapping("/doAdmin")
+	public void doAdmin() {
+		log.info("doAdmin 호출");
 	}
 }
