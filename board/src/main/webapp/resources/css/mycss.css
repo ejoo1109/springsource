@@ -1,4 +1,18 @@
 @charset "UTF-8";
+
+body {
+	background-color: black;
+	
+}
+
+body h1 {
+	color: white;
+}
+
+.uploadDiv {
+	color: white;
+	border: medium;
+}
 .uploadResult{
 	width:100%;
 	background-color: gray;

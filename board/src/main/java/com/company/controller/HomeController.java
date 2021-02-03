@@ -2,6 +2,7 @@ package com.company.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +26,11 @@ public class HomeController {
 	@GetMapping("/except")
 	public void excetTest(int no) {
 		logger.info("예외 테스트");
+	}
+	
+	@GetMapping("/accessError")
+	public String accessError(Authentication auth) {
+		logger.info("접근 제한"+auth);
+		return "/member/accessError";
 	}
 }

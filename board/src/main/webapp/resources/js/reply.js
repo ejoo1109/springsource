@@ -11,6 +11,9 @@ var replyService = (function(){
 			type:'post',
 			url:'/replies/new',
 			contentType:'application/json;charset=utf-8',
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			data:JSON.stringify(reply),
 			success:function(result){
 				if(callback){
@@ -19,6 +22,8 @@ var replyService = (function(){
 			}
 		})
 	}// add end
+	
+	
 	//private 개념이라 외부에서 직접적으로 메소드 호출 불가 사용하고 싶으면 return 으로 사용
 	function getList(param,callback){ 
 		console.log("getList 호출");
@@ -41,12 +46,19 @@ var replyService = (function(){
 	}//getList end
 	
 	//댓글 삭제
-	function remove(rno,callback){
+	function remove(rno, replyer, callback){
 		console.log("remove 호출");
 		
 		$.ajax({
 			url:'/replies/'+rno,
 			type:'delete',
+			contentType:"application/json;charset=utf-8",
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
+			data:JSON.stringify({
+				replyer:replyer
+			}),
 			success:function(result){
 				if(callback){
 					callback(result);
@@ -62,6 +74,9 @@ var replyService = (function(){
 			url:'/replies/'+reply.rno,
 			type:'put',
 			contentType:'application/json;charset=utf-8',
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			data:JSON.stringify(reply),
 			success:function(result){
 				if(callback){
@@ -100,7 +115,7 @@ var replyService = (function(){
 			var ss=dateObj.getSeconds();
 			
 			//9보다 클 경우 그대로, 작을경우 앞에 '0'르 붙여서 출력
-			return [(hh>9?'':'0')+hh, ':', (mi>9?'':'0')+mi,':',(sc>9?'':'0')+sc].join('');
+			return [(hh>9?'':'0')+hh, ':', (mi>9?'':'0')+mi,':',(ss>9?'':'0')+ss].join('');
 		}else{//댓글 작성한 날짜가 당일이 아니라면 년/월/일
 			var yy=dateObj.getFullYear();
 			var mm=dateObj.getMonth()+1;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +35,14 @@ public class BoardController {
 	private BoardService service;
 	
 	//게시글 작성 폼 보여주기
+	@PreAuthorize("isAuthenticated()") //로그인 정보가 있는지 확인
 	@GetMapping("/register") // /board/register.jsp페이지가 보여짐
 	public void register() {
 		log.info("게시글 작성 폼 보여주기");
 	}
 	
 	//게시글 작성
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/register")
 	public String registerPost(BoardVO board,RedirectAttributes rttr) {
 		log.info("=====게시글 등록"+board);
@@ -83,7 +86,8 @@ public class BoardController {
 	
 	//특정 게시물 삭제하기
 	@PostMapping("/remove")
-	public String remove(int bno,Criteria cri,RedirectAttributes rttr){
+	@PreAuthorize("#writer == principal.username")
+	public String remove(int bno,String writer, Criteria cri,RedirectAttributes rttr){
 		log.info("=====삭제 요청"+bno);
 		
 		//게시물 번호에 해당하는 첨부파일 삭제(서버 폴더 파일 삭제,데이터베이스 삭제)
@@ -139,6 +143,7 @@ public class BoardController {
 	
 	//특정 게시물 수정
 	@PostMapping("/modify")
+	@PreAuthorize("#board.writer == principal.username") //principal.username = id와 같음. 작성자와 로그인한 정보가 일치하는지 확인
 	public String update(BoardVO board,Criteria cri, RedirectAttributes rttr) {
 		log.info("=====수정요청"+board);
 		log.info("criteria - "+cri);

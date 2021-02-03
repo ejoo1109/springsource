@@ -37,20 +37,9 @@
 		<security:remember-me data-source-ref="ds" token-validity-seconds="604800"/>
 	</security:http>
 
-<!-- 인증을 어떤 방식으로 할 것인지 기록 -->
+	<!-- 인증을 어떤 방식으로 할 것인지 기록 -->
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="userDetail">
-			<!-- 방법1. user인증을 in-memory방식으로 진행 (연습용)-->
-<!-- 			<security:user-service> 
-				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER" />
-				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER,ROLE_ADMIN" />
-			</security:user-service> -->
-			<!-- 방법2. user인증을 jdbc 인증 방식으로 진행 -->
-<!-- 			<security:jdbc-user-service data-source-ref="ds" 
-				users-by-username-query="select userid,userpw,enabled from spring_member where userid=?" 
-				authorities-by-username-query="select * from spring_member_auth where userid=?"/> -->
-			
-
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
 			<!-- test:http://localhost:8080/security/admin id=admin90 pw=pw90 -->
 			</security:authentication-provider>

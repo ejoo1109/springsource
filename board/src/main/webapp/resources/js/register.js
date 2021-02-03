@@ -57,6 +57,9 @@ $(function(){
 			//기본값은 application/x-www-form-urlencoded임(파일첨부이므로 multipart/form-data로 보내야함)
 			contentType:false,
 			data:formData,
+			beforeSend:function(xhr){
+				xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+			},
 			success:function(result){ //result는 컨트롤러에서 상태코드가 넘어오는 값을 의미함
 				console.log(result);
 				showUploadFile(result); //첨부파일 업로드 후 파일이름 남지않게 하기

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class ReplyController {
 	
 	// localhost:8080/replies/new + post
 	@PostMapping("/new")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> create(@RequestBody ReplyVO reply){
 		log.info("댓글 삽입"+reply);
 		
@@ -50,7 +52,7 @@ public class ReplyController {
 	//전체 댓글 조회-localhost:8080/replies/pages/1030/2
 	@GetMapping(value="/pages/{bno}/{page}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<ReplyPageVO> getList(@PathVariable("bno") int bno,@PathVariable("page") int page){
-		log.info("전체 댓글 조회"+bno);
+		log.info("전체 댓글 조회"+bno+", page="+page);
 		Criteria cri = new Criteria(page,10);
 		return 	new ResponseEntity<ReplyPageVO>(service.getList(cri, bno),HttpStatus.OK);
 	}
@@ -58,6 +60,7 @@ public class ReplyController {
 	// 댓글 수정-localhost:8080/replies/2 + put + 수정할 내용
 	//@PutMapping(value="/{rno}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@PutMapping("/{rno}")
+	@PreAuthorize("principal.username == #reply.replyer")
 	public ResponseEntity<String> update(@PathVariable("rno") int rno,@RequestBody ReplyVO reply){
 		log.info("댓글 수정"+reply);
 		
@@ -69,7 +72,8 @@ public class ReplyController {
 	
 	//댓글 삭제
 	@DeleteMapping("/{rno}")
-	public ResponseEntity<String> remove(@PathVariable("rno") int rno){
+	@PreAuthorize("principal.username == #vo.replyer") //principal.username == userid와 댓글등록 id와 같은지 확인
+	public ResponseEntity<String> remove(@PathVariable("rno") int rno,@RequestBody ReplyVO vo){
 		log.info("댓글 삭제"+rno);
 		return service.delete(rno)?
 				new ResponseEntity<String>("success",HttpStatus.OK):

@@ -1,5 +1,6 @@
 package com.company.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +35,15 @@ public class SecurityController {
 		}
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
+	//@PreAuthorize("hasAnyRole('ROLE_MEMBER','ROLE_ADMIN')")
+	@Secured({"ROLE_MEMBER","ROLE_ADMIN"})
 	@GetMapping("/doMember")
 	public void doMember() {
 		log.info("doMember 호출");
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')") //표현식 사용가능
+	@Secured("ROLE_ADMIN")						//표현식 사용불가능 isAuthenticated()
 	@GetMapping("/doAdmin")
 	public void doAdmin() {
 		log.info("doAdmin 호출");
