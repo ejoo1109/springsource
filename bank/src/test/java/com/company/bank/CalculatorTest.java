@@ -1,8 +1,10 @@
-package com.company.bacnk;
+package com.company.bank;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.company.bank.Calculator;
 
 //테스트 클래스는 무조건 public 이어야함
 

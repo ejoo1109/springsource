@@ -1,4 +1,4 @@
-package com.company.bacnk;
+package com.company.bank;
 
 /**
  * Hello world!
